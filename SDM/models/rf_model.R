@@ -13,13 +13,14 @@ library(sf) # cropping/clipping
 library(raster) # extent clipping
 library(terra) # dealing with SpatRasters
 library(rnaturalearth) # setting up coordinate grid for prediction
+library(ggplot2)
 
 setwd("~/Desktop/Documents/Research/Paper Code/adaptation_load/SDM/")
 
 # define variables
 set.seed(1066)
 pca.perc = 0.95 # percent cut off for number of principal components to retain for modeling
-region = "Appalachian" # expansion | Appalachian
+region = "expansion" # expansion | Appalachian
 buffer = 6 # lat/long buffer on world crop
 resolution = 2.5 # worldclim data resolution. 2.5 recommended
 bio.vers = "2.1"
@@ -97,7 +98,7 @@ mu.accuracy <- rbind(mu.accuracy.app, mu.accuracy.exp)
 mu.accuracy$model <- "rf"
 mu.accuracy$variable <- rep(paste0("PC",1:5),2)
 
-ggplot(data=mu.accuracy, aes(x=mu.decrease.accuracy, y=reorder(variable, mu.decrease.accuracy), shape=gr))+
+ggplot(data=mu.accuracy, aes(x=mu.decrease.accuracy, y=reorder(variable, mu.decrease.accuracy, FUN="max"), shape=gr))+
   geom_segment(xend=0, color="gray", linewidth=2)+
   geom_point(size=4)+
   facet_wrap(~gr)+
