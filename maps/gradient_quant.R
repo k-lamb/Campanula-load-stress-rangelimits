@@ -169,8 +169,8 @@ ggplot(data=world)+
   geom_sf(data=states, fill=NA, alpha=0.5, color="black")+ #adds state boundaries
   geom_sf(data=lakes, fill="gray40")+ #adds the great lakes
   coord_sf(xlim=c(-98,-83), ylim=c(36,47), expand=FALSE)+ #sets boundaries to extent of model
-  xlab("Latitude")+
-  ylab("Longitude")+
+  xlab("Longitude")+
+  ylab("Latitude")+
   # geom_point(data=lat_pops, aes(x=long, y=lat), colour="black", size=1.5)+ # sequenced pops
   geom_point(data=lat_pops, aes(x=long, y=lat, group=transect), size=4)+
   theme_bw()+

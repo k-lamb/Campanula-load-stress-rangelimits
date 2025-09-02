@@ -156,8 +156,8 @@ ggplot(data=world.sf)+
   scale_color_manual(values=c("red", "green4"))+
   geom_point(data=app, aes(x=longitude, y=latitude, color=as.factor(presence)), size=0.75, shape=17)+
   coord_sf(xlim=c(-72, -100), ylim=c(25, 47), expand=FALSE)+
-  xlab("Latitude")+
-  ylab("Longitude")+
+  xlab("Longitude")+
+  ylab("Latitude")+
   theme_bw()+
   theme(text = element_text(size = 12), legend.position = "none",
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -175,11 +175,11 @@ ggplot(data=world.sf)+
   # geom_point(data=pa.grid, aes(x=longitude,y=latitude), color="coral1", size=0.25)+
   ggnewscale::new_scale_color()+
   # geom_point(data=expand, aes(x=longitude, y=latitude, color=as.factor(presence)), size=0.35)+
-  scale_color_manual(values=c("red", "green4"))+
-  geom_point(data=app, aes(x=longitude, y=latitude, color=as.factor(presence)), size=0.75, shape=17)+
+  scale_fill_manual(values=c("white", "black"))+
+  geom_point(data=app, aes(x=longitude, y=latitude, fill=as.factor(presence)), size=0.75, shape=24)+
   coord_sf(xlim=c(-72, -100), ylim=c(25, 47), expand=FALSE)+
-  xlab("Latitude")+
-  ylab("Longitude")+
+  xlab("Longitude")+
+  ylab("Latitude")+
   theme_bw()+
   theme(text = element_text(size = 12), legend.position = "none",
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -196,9 +196,9 @@ ggplot(data=world.sf)+
   # geom_sf(data=gen.buffer2, fill=NA, color="forestgreen", linewidth=0.75)+ # buffer hull (used in masking)
   # geom_point(data=pa.grid, aes(x=longitude,y=latitude), color="coral1", size=0.25)+
   ggnewscale::new_scale_color()+
-  geom_point(data=expand, aes(x=longitude, y=latitude, color=as.factor(presence)), size=0.35)+
-  scale_color_manual(values=c("red", "green4"))+
-  # geom_point(data=app, aes(x=longitude, y=latitude, color=as.factor(presence)), size=0.75, shape=17)+
+  scale_fill_manual(values=c("white", "black"))+
+  geom_point(data=expand, aes(x=longitude, y=latitude, fill=as.factor(presence)), size=0.5, shape=21)+
+  # geom_point(data=app, aes(x=longitude, y=latitude, color=as.factor(presence)), size=0.75, shape=24)+
   coord_sf(xlim=c(-72, -100), ylim=c(25, 47), expand=FALSE)+
   xlab("Longitude")+
   ylab("Latitude")+

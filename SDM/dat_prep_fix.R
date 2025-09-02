@@ -37,7 +37,7 @@ neighbor.dist = 200 # distance from nearest neighbor in km
 size.t = 16 # size of text in plots
 lat.cutoff = 33.5 # latitude cutoff for determining when buffer is used and when latitude is used
 lat.cutoff.TF = FALSE # if you want to use the latitude cut off above. my recommendation is to set to F, as you only gain 2 remote points
-region = "Appalachian" # "rear", "mid.lat", "leading", "expansion" (mid.lat and leading), "Appalachian"
+region = "expansion" # "rear", "mid.lat", "leading", "expansion" (mid.lat and leading), "Appalachian"
 bio.vers = "2.1" # which version of bioclim to use. 2.1 is higher resolution but does not work for LGM projection
 method.pa.prune = "cut.out.inside" # "cut.around.presence" | "cut.out.inside" <-- whether to allow pseudo-absences to generate within the range or whether to use a hull to exclude them
 
@@ -79,10 +79,12 @@ if (region == "expansion"){
     dplyr::select(POP...1, Clade, long, lat)
   names(pop.lim) <- c("pop", "clade", "longitude", "latitude")
   
-  pop.lim <- pop.lim %>% filter(pop == "KY5" | pop == "KY1" | pop == "TN34" | pop == "OH119" | pop == "IN5" | pop == "IN7" | 
-                                  pop == "MI2" | pop == "IN2" | pop == "TN3" | pop == "IA17" | pop == "IL10" | pop == "WI4" | 
-                                  pop == "MO2" | pop == "IA12" | pop == "MN8" | pop == "MN117" | pop == "KS60" | pop == "OK1" | 
-                                  pop == "OK61" | pop == "AR2")
+  # pop.lim <- pop.lim %>% filter(pop == "KY5" | pop == "KY1" | pop == "TN34" | pop == "OH119" | pop == "IN5" | pop == "IN7" | 
+  #                                 pop == "MI2" | pop == "IN2" | pop == "TN3" | pop == "IA17" | pop == "IL10" | pop == "WI4" | 
+  #                                 pop == "MO2" | pop == "IA12" | pop == "MN8" | pop == "MN117" | pop == "KS60" | pop == "OK1" | 
+  #                                 pop == "OK61" | pop == "AR2")
+  
+  pop.lim <- pop.lim %>% filter(latitude > 35 & longitude < -83 & clade == "Western")
   
   # generate a buffered concave polygon around the desired samples
   gen.sf <- st_as_sf(pop.lim, coords=c("longitude", "latitude"), crs=4326)
@@ -108,8 +110,12 @@ if (region == "Appalachian"){
   
   pop.lim <- read_excel("./SDM/data/C americana populations.xlsx") %>% as.data.frame() 
   pop.lim <- pop.lim[,c(5,9,7,6,10)] # pop, lineage, longitude, latitude
+  pop.lim <- pop.lim[-1,]
   names(pop.lim) <- c("pop", "clade", "longitude", "latitude", "state")
   pop.lim <- pop.lim %>% filter(clade == "Appalachian" | state == "North Carolina" | (state == "Georgia" & latitude > 34))
+  
+  alt <- terra::rast("~/Downloads/wc2.1_30s_elev.tif")
+  alt.coord <- terra::extract(alt, st_as_sf(pop.lim %>% na.omit(), coords=c("longitude", "latitude"), crs=4326))
   
   # generate a buffered concave polygon around the desired samples
   gen.sf <- st_as_sf(pop.lim, coords=c("longitude", "latitude"), crs=4326)
@@ -352,6 +358,15 @@ if (sanity.plot == T) {
 ## 4. download and prep bioclim data from WorldClim 2.1
 # i - download and extract data (contemporary and LGM)
 # ii - combine data 
+
+### altitude for appalachian only
+if (region == "Appalachian") {
+  alt <- terra::rast("~/Downloads/wc2.1_30s_elev.tif")
+  alt.coord <- read.csv("SDM/data/cam_pa2m30s_100km_Appalachian_1x_extended_fix1.csv")
+  alt.coord <- terra::extract(alt, st_as_sf(alt.coord %>% filter(presence==1), coords=c("longitude", "latitude"), crs=4326))
+  range(alt.coord$wc2.1_30s_elev)
+  
+}
 
 # CONTEMPORARY data
 # convert points for extracting bioclim data

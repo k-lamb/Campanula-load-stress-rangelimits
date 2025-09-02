@@ -122,8 +122,8 @@ ggplot(data=world)+
   geom_sf(data=buffer.hull, fill=NA, color="black", linetype=3, linewidth=0.85)+ # buffer hull (used in masking)
   geom_sf(data=lakes, fill="white")+ #adds the great lakes
   coord_sf(xlim=c(min(locations$long)-1,max(locations$long)-1), ylim=c(34, 46), expand=FALSE)+
-  xlab("Latitude")+
-  ylab("Longitude")+
+  xlab("Longitude")+
+  ylab("Latitude")+
   ggnewscale::new_scale_fill()+
   geom_point(data=subset(locations, pop == "non"), aes(x=long, y=lat.2, shape=env.var, fill=env.grp), size=5)+ #adds lab collections
   # geom_point(data=subset(locations, pop == "non"), aes(x=long, y=lat.2, shape=env.var), color="gray30", size=4.3)+ #adds lab collections
