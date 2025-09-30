@@ -197,8 +197,8 @@ if (sanity.plot == T) {
              ylim=c(min(coordinates$latitude)-3, max(coordinates$latitude)+3), expand=FALSE)+
     geom_point(data=coordinates, aes(x=longitude, y=latitude), size=0.5)+
     # geom_text(data=coordinates, aes(x=longitude, y=latitude, label=id))+
-    xlab("Latitude")+
-    ylab("Longitude")+
+    xlab("Longitude")+
+    ylab("Latitude")+
     theme_bw()+
     theme(panel.border = element_blank(), panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
@@ -348,8 +348,8 @@ if (sanity.plot == T) {
     geom_point(data=c.americana, aes(x=longitude, y=latitude, color=as.factor(presence)), size=0.5)+
     scale_color_manual(values=c("coral3", "green4"))+
     coord_sf(xlim=c(-72, -100), ylim=c(25, 47), expand=FALSE)+
-    xlab("Latitude")+
-    ylab("Longitude")+
+    xlab("Longitude")+
+    ylab("Latitude")+
     theme_bw()+
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), 
           axis.line = element_line(colour = "black"))
