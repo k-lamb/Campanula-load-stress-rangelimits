@@ -27,8 +27,8 @@ setwd("~/Desktop/Documents/Research/Paper Code/adaptation_load/local_adaptation/
 cg <- read.csv("data/elevation/elev_rel_abs_HERB.csv", stringsAsFactors = T)[,-c(1:3)]
 cg.no_herb <- read.csv("data/elevation/elev_rel_abs_NO_HERB.csv", stringsAsFactors = T)[,-1]
 
-cg <- cg %>% mutate_at(vars(block), as.factor)
-cg.no_herb <- cg.no_herb %>% mutate_at(vars(block), as.factor)
+cg <- cg %>% mutate_at(vars(block), as.factor) %>% mutate(pop.transect = if_else(pop == "SM", "e4", pop.transect))
+cg.no_herb <- cg.no_herb %>% mutate_at(vars(block), as.factor) %>% mutate(pop.transect = if_else(pop == "SM", "e4", pop.transect))
 
 cg$garden.group <- factor(cg$garden.group, c("low", "high"))
 cg$pop.group <- factor(cg$pop.group, c("low", "high"))
@@ -84,7 +84,7 @@ ggplot()+
              color="black", size=s.size, shape=24, position = position_dodge(width=dodge))+
   
   theme_bw()+
-  ylim(c(0,2))+
+  ylim(c(0,2.5))+
   scale_color_manual(values=c("Core" = "firebrick1", "Mid"="orchid2", "Edge" = "skyblue3"))+
   scale_fill_manual(values=c("Core" = "firebrick1", "Mid"="orchid2", "Edge" = "skyblue3"))+
   ylab("Relative fitness")+
@@ -94,7 +94,9 @@ ggplot()+
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         plot.background = element_blank(), axis.line = element_line(colour = "black"),
         aspect.ratio = 2)
-ggsave("plots/elevation/rel_fr_LA_color.jpg")
+ggsave("plots/elevation/rel_fr_LA_color_fix.jpg")
 
 # ggpubr::ggarrange(a,b, ncol=2)
 # ggsave("plots/elevation/elev_fl_fr_LA.jpg")
+
+

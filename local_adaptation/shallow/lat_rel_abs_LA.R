@@ -67,6 +67,7 @@ cg.se$garden.group <- factor(cg.se$garden.group, levels = c("Core", "Mid", "Edge
 # b <-
 s.size=6
 dodge=0.5
+# jpeg("plots/latitude/rel_fr_color_fix.jpg", units="in", res=5e2, height=5, width=4)
 ggplot()+
   geom_line(data=cg.se, aes(x=garden.group, y=response, group=pop.group, color=pop.group),
             position = position_dodge(width=dodge), linetype=3)+
@@ -75,7 +76,7 @@ ggplot()+
   geom_point(data=cg.se, aes(x=garden.group, y=response, fill=pop.group), 
              color="black", size=s.size, shape=21, position = position_dodge(width=dodge))+
   theme_bw()+
-  ylim(c(0,2))+
+  ylim(c(0,2.5))+
   scale_color_manual(values=c("Core" = "firebrick1", "Mid"="orchid2", "Edge" = "skyblue3"))+
   scale_fill_manual(values=c("Core" = "firebrick1", "Mid"="orchid2", "Edge" = "skyblue3"))+
   ylab("Relative fitness")+
@@ -85,7 +86,12 @@ ggplot()+
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         plot.background = element_blank(), axis.line = element_line(colour = "black"),
         aspect.ratio = 2)
-ggsave("plots/latitude/rel_fr_color.jpg")
+# dev.off()
+
+# use this instead of jpeg/dev.off above: (just bring the plot window to its max vertical size)
+# ggsave("plots/latitude/rel_fr_color_fix.jpg")
 
 # ggpubr::ggarrange(a,b, ncol=2)
 # ggsave("plots/latitude/lat_fl_fr_LA.jpg")
+
+
